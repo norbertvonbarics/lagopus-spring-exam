@@ -10,15 +10,14 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Question {
-@Id
+
+  @Id
   long id;
   String question;
-  String answer;
 
-  public Question(long id, String question, String answer) {
+  public Question(long id, String question) {
     this.id = id;
     this.question = question;
-    this.answer = answer;
   }
 
   public Question() {
