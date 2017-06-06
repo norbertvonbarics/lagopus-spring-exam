@@ -11,8 +11,6 @@ import lombok.Setter;
 @Setter
 public class Answers {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
   long id;
   ArrayList<Answer> answers;
 
