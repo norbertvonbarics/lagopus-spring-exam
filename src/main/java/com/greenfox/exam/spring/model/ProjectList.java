@@ -13,9 +13,9 @@ public class ProjectList {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  ArrayList<String> projectList;
+  ArrayList<Project> projectList;
 
-  public ProjectList(ArrayList<String> projectList) {
+  public ProjectList(ArrayList<Project> projectList) {
     this.projectList = projectList;
   }
 

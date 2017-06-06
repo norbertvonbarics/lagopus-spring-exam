@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Project {
+
   String nameOfProject;
 
   public Project(String nameOfProject) {

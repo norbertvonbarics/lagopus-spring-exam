@@ -14,9 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 @RestController
 public class MainRestController {
+
 
   @Autowired
   QuestionRepository questionRepo;
@@ -31,6 +33,9 @@ public class MainRestController {
   QuizAnswerRepository quizAnswerRepo;
 
   ArrayList<Question> questionList = new ArrayList<>();
+
+  private final String url = "https://springexamserver.herokuapp.com/projects/sabers";
+  private final String request  = "project request";
 
   @RequestMapping("/questions")
   public QuizQuestions quiz() {
@@ -52,11 +57,29 @@ public class MainRestController {
     ArrayList<Project> projectList = new ArrayList<>();
 
 
-    for(int i = 0; i < answers.getAnswers().size(); i++) {
-      if((answers.getAnswers().get(i).getId() == questionList.get(i).getId()) && (answers.getAnswers().get(i).getAnswer().equals(questionList.get(i).getQuestion()))){
 
+    RestTemplate restTemplate = new RestTemplate();
+    restTemplate.postForObject(url, request, ProjectList.class);
+
+    boolean isAllTrue = true;
+
+    for(int i = 0; i < answers.getAnswers().size(); i++) {
+      if((answers.getAnswers().get(i).getId() != questionList.get(i).getId()) && (!answers.getAnswers().get(i).getAnswer().equals(questionList.get(i).getQuestion()))){
+        isAllTrue = false;
       }
     }
-  return null;
+
+    if (isAllTrue) {
+      projectList.add(new Project("Booking and Resource Backend Service"));
+      projectList.add(new Project("Notification Backend Service"));
+      projectList.add(new Project("Currency and Payment Backend Service"));
+      projectList.add(new Project("Monitoring and Analytics Backend Service"));
+      projectList.add(new Project("User Profile and Authentication Backend Service"));
+      projectList.add(new Project("User Profile and Authentication Backend Service"));
+
+      return  new ProjectList(projectList);
+    } else {
+      return new ProjectList(projectList);
+    }
   }
 }
